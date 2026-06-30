@@ -47,3 +47,17 @@ def editar_producto(request, pk):
         'form': form,
         'titulo': f'Editar: {producto.nombre}'
     })
+    
+    
+def eliminar_producto(request, pk):
+    producto = get_object_or_404(Producto, pk=pk)
+
+    if request.method == 'POST':
+        nombre = producto.nombre
+        producto.delete()
+        messages.success(request, f'Producto "{nombre}" eliminado correctamente.')
+        return redirect('catalogo:listar_productos')
+
+    return render(request, 'catalogo/confirmar_eliminar.html', {
+        'producto': producto
+    })    
