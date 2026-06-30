@@ -24,7 +24,7 @@
             <td>${{ producto.precio }}</td>
             <td>{{ producto.stock }}</td>
             <td>
-                <!-- editar/eliminar se agregan en próximas fases -->
+                <a href="{% url 'catalogo:editar_producto' producto.pk %}">Editar</a>
             </td>
         </tr>
         {% empty %}

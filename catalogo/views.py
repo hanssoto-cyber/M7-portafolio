@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
 from .models import Producto
 from .forms import ProductoForm
@@ -26,4 +26,24 @@ def crear_producto(request):
     return render(request, 'catalogo/form_producto.html', {
         'form': form,
         'titulo': 'Nuevo producto'
+    })
+
+
+def editar_producto(request, pk):
+    producto = get_object_or_404(Producto, pk=pk)
+
+    if request.method == 'POST':
+        form = ProductoForm(request.POST, instance=producto)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Producto actualizado correctamente.')
+            return redirect('catalogo:listar_productos')
+        else:
+            messages.error(request, 'Revisa los errores del formulario.')
+    else:
+        form = ProductoForm(instance=producto)
+
+    return render(request, 'catalogo/form_producto.html', {
+        'form': form,
+        'titulo': f'Editar: {producto.nombre}'
     })
