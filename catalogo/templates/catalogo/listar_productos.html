@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+
+{% block title %}Productos{% endblock %}
+
+{% block content %}
+<h2>Catálogo de productos</h2>
+
+<table>
+    <thead>
+        <tr>
+            <th>Nombre</th>
+            <th>Categoría</th>
+            <th>Precio</th>
+            <th>Stock</th>
+            <th>Acciones</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for producto in productos %}
+        <tr>
+            <td>{{ producto.nombre }}</td>
+            <td>{{ producto.categoria.nombre|default:"Sin categoría" }}</td>
+            <td>${{ producto.precio }}</td>
+            <td>{{ producto.stock }}</td>
+            <td>
+                <!-- editar/eliminar se agregan en próximas fases -->
+            </td>
+        </tr>
+        {% empty %}
+        <tr>
+            <td colspan="5">No hay productos cargados todavía.</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}
